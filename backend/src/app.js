@@ -9,6 +9,7 @@ const cartroute=require("./routes/cartRoutes.js");
 const addressroute=require("./routes/addressRoutes.js");
 const checkoutroute=require("./routes/checkoutRoutes.js");
 const paymentorders=require("./routes/paymentsRoutes.js");
+const orderroutes = require("./routes/orderRoutes.js");
 
 app.use(express.json());
 
@@ -22,6 +23,7 @@ app.use("/cart",cartroute);
 app.use("/address",addressroute);
 app.use("/checkout",checkoutroute);
 app.use("/payment",paymentorders);
+app.use("/orders", orderroutes);
 
 app.use((req,res)=>
 {
@@ -33,3 +35,8 @@ app.use((req,res)=>
 
 app.use(errohandler);
 module.exports=app;
+
+
+
+
+
