@@ -4,7 +4,7 @@
 
 // 1) Backend URL
 //    LIVE: put your Render backend address here (no "/" at the end).
-const BACKEND_URL = "https://YOUR-BACKEND-NAME.onrender.com";
+const BACKEND_URL = "https://nivora-eats-project.onrender.com";
 
 //    TESTING on your computer (Live Server, localhost, or opening the file)
 //    automatically uses your local backend instead.
