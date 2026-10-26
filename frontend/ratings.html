@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reviews & Ratings | Nivora Eats</title>
   <link rel="stylesheet" href="ratings.css">
+  <link rel="stylesheet" href="app.css">
+  <script src="api.js"></script>
+  <script src="ratings.js" defer></script>
 </head>
 <body>
 
@@ -36,14 +39,11 @@
         <h2>Write a Review</h2>
         <p class="subtitle">Tell others about your homemade food experience.</p>
 
-        <form>
+        <form id="review-form" novalidate>
           <div class="form-group">
             <label for="food">Select Food Item</label>
             <select id="food" name="food" required>
-              <option value="">Choose a food item</option>
-              <option>Homemade Maharashtrian Thali</option>
-              <option>Paneer Sabji with Roti</option>
-              <option>Dal Rice Meal</option>
+              <option value="">Loading your delivered dishes...</option>
             </select>
           </div>
 
@@ -65,8 +65,8 @@
               type="text"
               id="review-title"
               name="title"
-              placeholder="Give your review a title"
-              required
+              placeholder="Give your review a title (optional)"
+              maxlength="80"
             >
           </div>
 
@@ -77,7 +77,7 @@
               name="review"
               rows="5"
               placeholder="How was the taste, quality and packaging?"
-              required
+              maxlength="900"
             ></textarea>
           </div>
 
@@ -85,7 +85,7 @@
             Submit Review
           </button>
 
-          <p class="form-note">
+          <p class="form-note" id="review-message" role="status">
             Your review helps other customers choose their food.
           </p>
         </form>
@@ -93,44 +93,44 @@
 
       <aside class="rating-summary">
         <p class="eyebrow">CUSTOMER FEEDBACK</p>
-        <h2>What People Say</h2>
+        <h2 id="summary-title">What People Say</h2>
 
         <div class="overall-rating">
-          <strong>4.8</strong>
+          <strong id="avg-rating">-</strong>
           <div>
-            <div class="stars">★★★★★</div>
-            <p>Based on sample reviews</p>
+            <div class="stars" id="avg-stars">☆☆☆☆☆</div>
+            <p id="review-total">Choose a dish to see its reviews</p>
           </div>
         </div>
 
         <div class="rating-bar">
           <span>5 stars</span>
-          <div><span style="width: 85%"></span></div>
-          <small>85%</small>
+          <div><span id="bar-5" style="width: 0%"></span></div>
+          <small id="pct-5">0%</small>
         </div>
 
         <div class="rating-bar">
           <span>4 stars</span>
-          <div><span style="width: 10%"></span></div>
-          <small>10%</small>
+          <div><span id="bar-4" style="width: 0%"></span></div>
+          <small id="pct-4">0%</small>
         </div>
 
         <div class="rating-bar">
           <span>3 stars</span>
-          <div><span style="width: 3%"></span></div>
-          <small>3%</small>
+          <div><span id="bar-3" style="width: 0%"></span></div>
+          <small id="pct-3">0%</small>
         </div>
 
         <div class="rating-bar">
           <span>2 stars</span>
-          <div><span style="width: 1%"></span></div>
-          <small>1%</small>
+          <div><span id="bar-2" style="width: 0%"></span></div>
+          <small id="pct-2">0%</small>
         </div>
 
         <div class="rating-bar">
           <span>1 star</span>
-          <div><span style="width: 1%"></span></div>
-          <small>1%</small>
+          <div><span id="bar-1" style="width: 0%"></span></div>
+          <small id="pct-1">0%</small>
         </div>
 
         <p class="summary-note">
@@ -148,43 +148,7 @@
         </div>
       </div>
 
-      <article class="review-card">
-        <div class="review-top">
-          <div class="avatar">A</div>
-          <div class="reviewer-info">
-            <h3>Ananya</h3>
-            <p>Ordered Homemade Maharashtrian Thali</p>
-          </div>
-          <span class="verified">✓ Verified order</span>
-        </div>
-
-        <div class="stars">★★★★★</div>
-        <h4>Just like home!</h4>
-        <p class="review-description">
-          The food was tasty and fresh. I really enjoyed the homemade
-          flavours and the overall quality.
-        </p>
-        <p class="review-date">Sample review</p>
-      </article>
-
-      <article class="review-card">
-        <div class="review-top">
-          <div class="avatar avatar-brown">R</div>
-          <div class="reviewer-info">
-            <h3>Rahul</h3>
-            <p>Ordered Paneer Sabji with Roti</p>
-          </div>
-          <span class="verified">✓ Verified order</span>
-        </div>
-
-        <div class="stars">★★★★☆</div>
-        <h4>Good taste and quality</h4>
-        <p class="review-description">
-          The meal was satisfying and nicely packed. I would like to
-          order from this cook again.
-        </p>
-        <p class="review-date">Sample review</p>
-      </article>
+      <div id="reviews-list"><p class="review-description">No dish selected yet.</p></div>
 
     </section>
 

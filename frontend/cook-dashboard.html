@@ -10,6 +10,9 @@
    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="cook-dashboard.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="api.js"></script>
+    <script src="cook-dashboard.js" defer></script>
 
 </head>
 
@@ -51,167 +54,180 @@
     
 
     <main class="add-food-page">
-
         <div class="add-food-container">
-
             <div class="page-heading">
-
-                <h1>Add Food Item</h1>
-
-                <p>
+                <h1 id="form-heading">Add Food Item</h1>
+                <p id="form-subheading">
                     Add a new homemade dish to your Nivora Eats menu.
                 </p>
-
             </div>
 
             <section class="form-card">
-
-                <form>
+                <form id="food-form" novalidate>
 
                     <div class="form-row">
-
                         <div class="form-group">
-
-                            <label for="dish-name">
-                                Dish Name
-                            </label>
-
+                            <label for="dish-name">Dish Name</label>
                             <div class="input-box">
-
                                 <i class="fa-solid fa-utensils"></i>
-
-                                <input
-                                    type="text"
-                                    id="dish-name"
-                                    placeholder="Enter dish name"
-                                >
-
+                                <input type="text" id="dish-name" minlength="10" maxlength="30" placeholder="e.g. Kolhapuri Misal Pav" required>
                             </div>
-
+                            <small class="form-hint">10 to 30 characters</small>
                         </div>
-
-
 
                         <div class="form-group">
-
-                            <label for="price">
-                                Price
-                            </label>
-
+                            <label for="price">Price (₹)</label>
                             <div class="input-box">
-
                                 <i class="fa-solid fa-indian-rupee-sign"></i>
-
-                                <input
-                                    type="number"
-                                    id="price"
-                                    placeholder="Enter price"
-                                >
-
+                                <input type="number" id="price" min="1" step="1" placeholder="e.g. 120" required>
                             </div>
+                        </div>
+                    </div>
 
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cuisine">Cuisine</label>
+                            <div class="input-box">
+                                <i class="fa-solid fa-map"></i>
+                                <select id="cuisine" required>
+                                    <option value="">Choose cuisine</option>
+                                    <option value="kolhapuri">Kolhapuri</option>
+                                    <option value="malvani">Malvani</option>
+                                    <option value="khandeshi">Khandeshi</option>
+                                    <option value="varhadi">Varhadi</option>
+                                    <option value="marathwada">Marathwada</option>
+                                    <option value="agrikoli">Agri-Koli</option>
+                                    <option value="pune">Pune</option>
+                                    <option value="solapuri">Solapuri</option>
+                                </select>
+                            </div>
                         </div>
 
+                        <div class="form-group">
+                            <label for="region">Region / City</label>
+                            <div class="input-box">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <input type="text" id="region" maxlength="50" placeholder="e.g. Kolhapur" required>
+                            </div>
+                        </div>
                     </div>
 
-
-                    <div class="form-group">
-
-                        <label for="description">
-                            Description
-                        </label>
-
-                        <textarea
-                            id="description"
-                            rows="5"
-                            placeholder="Describe your homemade dish..."
-                        ></textarea>
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label for="food-image">
-                            Food Image
-                        </label>
-
-                        <div class="upload-box">
-
-                            <i class="fa-solid fa-cloud-arrow-up"></i>
-
-                            <h3>
-                                Upload Food Image
-                            </h3>
-
-                            <p>
-                                Add a clear photo of your homemade dish
-                            </p>
-
-                            <input
-                                type="file"
-                                id="food-image"
-                                accept="image/*"
-                            >
-
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="foodType">Food Type</label>
+                            <div class="input-box">
+                                <i class="fa-solid fa-leaf"></i>
+                                <select id="foodType" required>
+                                    <option value="veg">Veg</option>
+                                    <option value="non-veg">Non-Veg</option>
+                                </select>
+                            </div>
                         </div>
 
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <div class="input-box">
+                                <i class="fa-solid fa-tags"></i>
+                                <input type="text" id="category" list="category-options" maxlength="40" placeholder="e.g. breakfast" required>
+                            </div>
+                        </div>
                     </div>
 
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="servingSize">Serving Size</label>
+                            <div class="input-box">
+                                <i class="fa-solid fa-bowl-food"></i>
+                                <input type="text" id="servingSize" maxlength="40" placeholder="e.g. 1 plate / pack of 2" required>
+                            </div>
+                        </div>
 
-                    <div class="form-group quantity-group">
+                        <div class="form-group">
+                            <label for="preparationTime">Preparation Time (minutes)</label>
+                            <div class="input-box">
+                                <i class="fa-solid fa-clock"></i>
+                                <input type="number" id="preparationTime" min="1" step="1" placeholder="e.g. 25" required>
+                            </div>
+                        </div>
+                    </div>
 
-                        <label for="quantity">
-                            Quantity Available
-                        </label>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="spiceLevel">Spice Level</label>
+                            <div class="input-box">
+                                <i class="fa-solid fa-pepper-hot"></i>
+                                <select id="spiceLevel">
+                                    <option value="mild">Mild</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="spicy">Spicy</option>
+                                    <option value="very-spicy">Very spicy</option>
+                                </select>
+                            </div>
+                        </div>
 
+                        <div class="form-group">
+                            <label for="ingredients">Ingredients</label>
+                            <div class="input-box">
+                                <i class="fa-solid fa-list"></i>
+                                <input type="text" id="ingredients" maxlength="300" placeholder="e.g. moth beans, onion, pav">
+                            </div>
+                            <small class="form-hint">Separate with commas</small>
+                        </div>
+                    </div>
+
+                    <datalist id="category-options">
+                        <option value="breakfast"></option>
+                        <option value="lunch"></option>
+                        <option value="dinner"></option>
+                        <option value="thali"></option>
+                        <option value="snacks"></option>
+                        <option value="sweets"></option>
+                    </datalist>
+
+                    <div class="form-group">
+                        <label for="shortDescription">Short Description (shown on the menu card)</label>
                         <div class="input-box">
-
-                            <i class="fa-solid fa-box"></i>
-
-                            <input
-                                type="number"
-                                id="quantity"
-                                min="1"
-                                placeholder="Enter available quantity"
-                            >
-
-                        </div>
-
-                        <small>
-                            Enter the number of portions available.
-                        </small>
-
+                                <i class="fa-solid fa-align-left"></i>
+                                <input type="text" id="shortDescription" maxlength="200" placeholder="One line about the dish">
+                            </div>
                     </div>
 
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" rows="5" minlength="20" maxlength="300"
+                            placeholder="Describe your homemade dish (20 to 300 characters)..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="food-image">Food Image</label>
+                        <div class="upload-box">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <h3>Upload Food Image</h3>
+                            <p>Add a clear photo of your homemade dish (stored on Cloudinary)</p>
+                            <input type="file" id="food-image" accept="image/*">
+                            <img id="image-preview" class="nv-preview" alt="Selected dish photo">
+                        </div>
+                        <small class="form-hint">Or paste an image link:</small>
+                        <div class="input-box">
+                                <i class="fa-solid fa-link"></i>
+                                <input type="url" id="image-url" placeholder="https://res.cloudinary.com/...">
+                            </div>
+                    </div>
+
+                    <p id="form-message" class="nv-form-message" role="status"></p>
 
                     <div class="form-actions">
-
-                        <button
-                            type="reset"
-                            class="cancel-btn"
-                        >
+                        <a href="my-foods.html" class="cancel-btn" style="text-decoration:none;display:inline-flex;align-items:center;">
                             Cancel
-                        </button>
-
-
-                        <button
-                            type="submit"
-                            class="add-dish-btn"
-                        >
+                        </a>
+                        <button type="submit" class="add-dish-btn" id="save-dish">
                             <i class="fa-solid fa-plus"></i>
-                            Add Dish
+                            <span id="save-dish-text">Add Dish</span>
                         </button>
-
                     </div>
-
-
                 </form>
-
             </section>
-
         </div>
-
     </main>
 
 

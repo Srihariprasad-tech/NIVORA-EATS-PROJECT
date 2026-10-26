@@ -9,6 +9,9 @@
  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="user-profile.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="api.js"></script>
+    <script src="user-profile.js" defer></script>
 
 </head>
 
@@ -56,339 +59,78 @@
     <!--  PROFILE PAGE -->
 
     <main class="profile-page">
-
         <div class="profile-container">
-
-
-            <!-- PAGE HEADING  -->
-
             <div class="page-heading">
-
                 <h1>My Profile</h1>
-
                 <p>
-                    Manage your personal information and account details.
+                    Your personal information and account details.
                 </p>
-
             </div>
 
-
-
-            <!--  PROFILE CARD -->
-
             <section class="profile-card">
-
                 <div class="profile-identity">
-
-
-                    <!-- Profile Avatar -->
-
                     <div class="profile-avatar">
-
                         <i class="fa-solid fa-user"></i>
-
                     </div>
-
-
-                    <!-- Profile Name -->
-
                     <div class="profile-name">
-
-                        <h2>Janhavi Shete</h2>
-
-                        <p>
-                            abc@gmail.com
-                        </p>
-
-
-                        <!-- User Role -->
-
+                        <h2 id="profile-name">-</h2>
+                        <p id="profile-email">-</p>
                         <span class="role-badge">
-
                             <i class="fa-solid fa-user"></i>
-
-                            Customer
-
+                            <span id="profile-role-badge">-</span>
                         </span>
-
                     </div>
-
                 </div>
-
             </section>
-
-
-
-            <!--  PERSONAL INFORMATION  -->
 
             <section class="information-card">
-
-
-                <!-- Section Header -->
-
                 <div class="section-header">
-
                     <div>
-
-                        <h2>
-                            Personal Information
-                        </h2>
-
-                        <p>
-                            Your account information
-                        </p>
-
+                        <h2>Personal Information</h2>
+                        <p>Your account information</p>
                     </div>
-
-
-                    <!-- Edit Button -->
-
-                    <button class="edit-btn">
-
-                        <i class="fa-solid fa-pen"></i>
-
-                        Edit Profile
-
-                    </button>
-
                 </div>
-
-
-
-                <!-- Information Grid -->
-
                 <div class="information-grid">
-
-
-                    <!-- Full Name -->
-
                     <div class="info-item">
-
-                        <span class="info-label">
-                            Full Name
-                        </span>
-
-                        <p>
-                            Janhavi Shete
-                        </p>
-
+                        <span class="info-label">Full Name</span>
+                        <p id="info-name">-</p>
                     </div>
-
-
-
-                    <!-- Email -->
-
                     <div class="info-item">
-
-                        <span class="info-label">
-                            Email Address
-                        </span>
-
-                        <p>
-                            abc@gmail.com
-                        </p>
-
+                        <span class="info-label">Email Address</span>
+                        <p id="info-email">-</p>
                     </div>
-
-
-
-                    <!-- Phone -->
-
                     <div class="info-item">
-
-                        <span class="info-label">
-                            Phone Number
-                        </span>
-
-                        <p>
-                            +91 1234567890
-                        </p>
-
+                        <span class="info-label">Phone Number</span>
+                        <p id="info-phone">-</p>
                     </div>
-
-
-
-                    <!-- Account Type -->
-
                     <div class="info-item">
-
-                        <span class="info-label">
-                            Account Type
-                        </span>
-
-                        <p>
-                            Customer
-                        </p>
-
+                        <span class="info-label">Account Type</span>
+                        <p id="info-role">-</p>
                     </div>
-
                 </div>
-
             </section>
-
-
-
-            <!--  MY ACTIVITY  -->
 
             <section class="activity-section">
-
-
-                <!-- Section Title -->
-
                 <div class="section-title">
-
-                    <h2>
-                        My Activity
-                    </h2>
-
-                    <p>
-                        Quick access to your Nivora Eats activity.
-                    </p>
-
+                    <h2>My Activity</h2>
+                    <p>Quick access to your Nivora Eats activity.</p>
                 </div>
-
-
-
-                <!-- Activity Cards -->
-
-                <div class="activity-grid">
-
-
-                    <!-- My Orders -->
-
-                    <div class="activity-card">
-
-                        <div class="activity-icon">
-
-                            <i class="fa-solid fa-bag-shopping"></i>
-
-                        </div>
-
-
-                        <div>
-
-                            <h3>
-                                My Orders
-                            </h3>
-
-                            <p>
-                                View your past and current orders.
-                            </p>
-
-                        </div>
-
-
-                        <i class="fa-solid fa-arrow-right arrow-icon"></i>
-
-                    </div>
-
-
-
-                    <!-- Saved Foods -->
-
-                    <div class="activity-card">
-
-                        <div class="activity-icon">
-
-                            <i class="fa-solid fa-heart"></i>
-
-                        </div>
-
-
-                        <div>
-
-                            <h3>
-                                Saved Foods
-                            </h3>
-
-                            <p>
-                                View your favourite homemade foods.
-                            </p>
-
-                        </div>
-
-
-                        <i class="fa-solid fa-arrow-right arrow-icon"></i>
-
-                    </div>
-
-
-
-                    <!-- My Reviews -->
-
-                    <div class="activity-card">
-
-                        <div class="activity-icon">
-
-                            <i class="fa-solid fa-star"></i>
-
-                        </div>
-
-
-                        <div>
-
-                            <h3>
-                                My Reviews
-                            </h3>
-
-                            <p>
-                                Manage your food ratings and reviews.
-                            </p>
-
-                        </div>
-
-
-                        <i class="fa-solid fa-arrow-right arrow-icon"></i>
-
-                    </div>
-
-                </div>
-
+                <div class="activity-grid" id="activity-grid"></div>
             </section>
-
-
-
-            <!-- SECURITY  -->
 
             <section class="security-card">
-
-
-                <!-- Security Icon -->
-
                 <div class="security-icon">
-
                     <i class="fa-solid fa-lock"></i>
-
                 </div>
-
-
-                <!-- Security Text -->
-
                 <div class="security-content">
-
-                    <h3>
-                        Password & Security
-                    </h3>
-
-                    <p>
-                        Keep your account secure by managing your password.
-                    </p>
-
+                    <h3>Signed in on this device</h3>
+                    <p>Log out when you are using a shared computer.</p>
                 </div>
-
-
-                <!-- Change Password -->
-
-                <button class="change-password-btn">
-
-                    Change Password
-
+                <button class="change-password-btn" id="profile-logout" type="button">
+                    Logout
                 </button>
-
             </section>
-
         </div>
-
     </main>
 
 

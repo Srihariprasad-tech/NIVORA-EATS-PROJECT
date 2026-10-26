@@ -8,6 +8,9 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="cook-profile.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="api.js"></script>
+    <script src="food-ui.js"></script>
 </head>
 
 <body>
@@ -39,17 +42,16 @@
 
             <div class="cook-info">
                 <span class="eyebrow">YOUR LOCAL HOME COOK</span>
-                <h1>Priya Sharma</h1>
+                <h1 id="cook-name">Home Cook</h1>
 
-                <p class="cook-bio">
-                    I love preparing fresh, homemade meals using
-                    traditional recipes and simple ingredients.
+                <p class="cook-bio" id="cook-bio">
+                    Fresh, homemade meals made with traditional recipes and simple ingredients.
                 </p>
 
                 <div class="cook-meta">
-                    <span><i class="fa-solid fa-location-dot"></i> Pune, Maharashtra</span>
-                    <span><i class="fa-solid fa-star"></i> 4.8 Rating</span>
-                    <span><i class="fa-solid fa-utensils"></i> 4 Dishes</span>
+                    <span><i class="fa-solid fa-location-dot"></i> <span id="cook-region">-</span></span>
+                    <span><i class="fa-solid fa-star"></i> <span id="cook-rating">New</span></span>
+                    <span><i class="fa-solid fa-utensils"></i> <span id="cook-dishes">0 Dishes</span></span>
                 </div>
             </div>
 
@@ -61,110 +63,24 @@
             <div class="section-header">
                 <div>
                     <p class="eyebrow">MADE WITH LOVE</p>
-                    <h2>Dishes by Priya</h2>
+                    <h2>Dishes by this cook</h2>
                     <p class="section-description">
                         Explore homemade dishes prepared by this cook.
                     </p>
                 </div>
 
-                <span id="foodCount">4 dishes</span>
+                <span id="foodCount">Loading...</span>
             </div>
 
            
             <div class="search-box">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" id="searchInput"
-                       placeholder="Search Priya's dishes...">
+                       placeholder="Search this cook's dishes...">
             </div>
 
             
-            <div class="food-grid" id="foodGrid">
-
-                <article class="food-card" data-name="misal pav">
-                    <div class="food-image">
-                        <img src="misal-pav-2.jpg" alt="Misal Pav">
-                        <span class="food-tag">Popular</span>
-                    </div>
-                    <div class="food-content">
-                        <div class="title-row">
-                            <h3>Misal Pav</h3>
-                            <span class="price">₹120</span>
-                        </div>
-                        <p>A spicy Maharashtrian classic served with soft pav.</p>
-                        <div class="food-meta">
-                            <span><i class="fa-solid fa-star"></i> 4.8</span>
-                            <span><i class="fa-solid fa-leaf"></i> Vegetarian</span>
-                        </div>
-                        <button class="view-btn" onclick="viewDish('Misal Pav')">
-                            View Details <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </article>
-
-                <article class="food-card" data-name="puran poli">
-                    <div class="food-image">
-                        <img src="Puran-Poli-2-3.jpg" alt="Puran Poli">
-                    </div>
-                    <div class="food-content">
-                        <div class="title-row">
-                            <h3>Puran Poli</h3>
-                            <span class="price">₹100</span>
-                        </div>
-                        <p>Traditional sweet flatbread filled with jaggery and lentils.</p>
-                        <div class="food-meta">
-                            <span><i class="fa-solid fa-star"></i> 4.9</span>
-                            <span><i class="fa-solid fa-leaf"></i> Vegetarian</span>
-                        </div>
-                        <button class="view-btn" onclick="viewDish('Puran Poli')">
-                            View Details <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </article>
-
-                <article class="food-card" data-name="paneer butter masala">
-                    <div class="food-image">
-                        <img src="paneer-masala.jpg"
-                             alt="Paneer Butter Masala">
-                    </div>
-                    <div class="food-content">
-                        <div class="title-row">
-                            <h3>Paneer Butter Masala</h3>
-                            <span class="price">₹180</span>
-                        </div>
-                        <p>Creamy paneer cooked in a rich tomato gravy.</p>
-                        <div class="food-meta">
-                            <span><i class="fa-solid fa-star"></i> 4.7</span>
-                            <span><i class="fa-solid fa-leaf"></i> Vegetarian</span>
-                        </div>
-                        <button class="view-btn"
-                                onclick="viewDish('Paneer Butter Masala')">
-                            View Details <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </article>
-
-                <article class="food-card" data-name="homemade veg thali">
-                    <div class="food-image">
-                        <img src="veg-thali.jpeg" alt="Homemade Veg Thali">
-                    </div>
-                    <div class="food-content">
-                        <div class="title-row">
-                            <h3>Homemade Veg Thali</h3>
-                            <span class="price">₹200</span>
-                        </div>
-                        <p>A wholesome meal with roti, rice, dal and sabzi.</p>
-                        <div class="food-meta">
-                            <span><i class="fa-solid fa-star"></i> 4.8</span>
-                            <span><i class="fa-solid fa-leaf"></i> Vegetarian</span>
-                        </div>
-                        <button class="view-btn"
-                                onclick="viewDish('Homemade Veg Thali')">
-                            View Details <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </article>
-
-            </div>
+            <div class="food-grid" id="foodGrid"></div>
 
             <div class="no-results" id="noResults">
                 <i class="fa-solid fa-bowl-food"></i>
@@ -179,41 +95,6 @@
         <p>© 2026 Nivora Eats. Homemade food, made with love.</p>
     </footer>
 
-    <script>
-        const searchInput = document.getElementById("searchInput");
-        const foodCards = document.querySelectorAll(".food-card");
-        const foodCount = document.getElementById("foodCount");
-        const noResults = document.getElementById("noResults");
-
-        function filterFoods() {
-            const searchText = searchInput.value.toLowerCase().trim();
-            let visibleCount = 0;
-
-            foodCards.forEach(function(card) {
-                const dishName = card.dataset.name.toLowerCase();
-                const matches = dishName.includes(searchText);
-
-                card.style.display = matches ? "" : "none";
-
-                if (matches) {
-                    visibleCount++;
-                }
-            });
-
-            foodCount.textContent =
-                visibleCount + (visibleCount === 1 ? " dish" : " dishes");
-
-            noResults.style.display =
-                visibleCount === 0 ? "block" : "none";
-        }
-
-        searchInput.addEventListener("input", filterFoods);
-
-        function viewDish(dishName) {
-            
-            alert("You selected: " + dishName);
-        }
-    </script>
-
+    <script src="cook-profile.js" defer></script>
 </body>
 </html>

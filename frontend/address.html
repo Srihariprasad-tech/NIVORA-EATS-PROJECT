@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Addresses , Nivora Eats</title>
   <link rel="stylesheet" href="address.css">
+  <link rel="stylesheet" href="app.css">
+  <script src="api.js"></script>
+  <script src="address.js" defer></script>
 </head>
 <body>
   <header class="navbar">
@@ -27,84 +30,82 @@
       <a href="#add-address" class="btn btn-primary">+ Add Address</a>
     </section>
 
+    <div id="address-message" role="status" style="margin:0 0 16px;font-weight:600;" hidden></div>
+
     <section class="address-section">
-      <h2>Saved Addresses <span class="count">2</span></h2>
-
-      <div class="address-grid">
-        <article class="address-card default-card">
-          <div class="card-top">
-            <span class="address-icon">⌂</span>
-            <span class="badge">Default Address</span>
-          </div>
-          <h3>Home</h3>
-          <p class="person">Your Name</p>
-          <p class="address-text">
-            House No. 12, Green Street,<br>
-            Pune, Maharashtra - 411001
-          </p>
-          <div class="card-actions">
-            <button class=" btn btn-outline" type="button">Edit</button>
-            <button class=" btn btn-danger-outline" type="button">Delete</button>
-          </div>
-        </article>
-
-        <article class="address-card">
-          <div class="card-top">
-            <span class="address-icon">⌖</span>
-            <button class="set-default" type="button">Set as Default</button>
-          </div>
-          <h3>College</h3>
-          <p class="person">Your Name</p>
-          <p class="address-text">
-            House No. 5, College Road,<br>
-            Pune, Maharashtra - 411005
-          </p>
-          <div class="card-actions">
-            <button class=" btn btn-outline" type="button">Edit</button>
-            <button class=" btn btn-danger-outline" type="button">Delete</button>
-          </div>
-        </article>
+      <h2>Saved Addresses <span class="count" id="address-count">0</span></h2>
+      <div class="address-grid" id="address-grid">
+        <p class="subtitle">Loading your addresses...</p>
       </div>
     </section>
 
     <section class="form-section" id="add-address">
-      <h2>Add a New Address</h2>
+      <h2 id="form-title">Add a New Address</h2>
       <p class="subtitle">Enter your delivery details below.</p>
 
-      <form class="address-form">
+      <form class="address-form" id="address-form" novalidate>
         <div class="form-grid">
           <div class="form-group">
-            <label for="house">House No. / Flat No.</label>
-            <input id="house" name="house" type="text"
-                   placeholder="e.g. Flat 204" required>
+            <label for="fullName">Full Name</label>
+            <input id="fullName" name="fullName" type="text" minlength="4" maxlength="50"
+                   placeholder="Name of the person receiving" autocomplete="name" required>
           </div>
 
           <div class="form-group">
-            <label for="street">Street / Area</label>
-            <input id="street" name="street" type="text"
-                   placeholder="Enter street or area" required>
+            <label for="phoneNo">Phone Number</label>
+            <input id="phoneNo" name="phoneNo" type="tel" inputmode="numeric" maxlength="15"
+                   placeholder="10-digit mobile number" autocomplete="tel" required>
+          </div>
+
+          <div class="form-group" style="grid-column:1 / -1;">
+            <label for="addressLine">House No., Street / Area</label>
+            <input id="addressLine" name="addressLine" type="text" minlength="5" maxlength="150"
+                   placeholder="e.g. Flat 204, Green Street, Kothrud" autocomplete="street-address" required>
+          </div>
+
+          <div class="form-group">
+            <label for="landmark">Landmark</label>
+            <input id="landmark" name="landmark" type="text" maxlength="100"
+                   placeholder="e.g. Near Shivaji Temple" required>
           </div>
 
           <div class="form-group">
             <label for="city">City</label>
-            <input id="city" name="city" type="text"
-                   placeholder="Enter city" required>
+            <input id="city" name="city" type="text" maxlength="50"
+                   placeholder="Enter city" autocomplete="address-level2" required>
+          </div>
+
+          <div class="form-group">
+            <label for="state">State</label>
+            <input id="state" name="state" type="text" maxlength="50" value="Maharashtra"
+                   placeholder="Enter state" autocomplete="address-level1" required>
           </div>
 
           <div class="form-group">
             <label for="pincode">Pincode</label>
             <input id="pincode" name="pincode" type="text"
                    inputmode="numeric" pattern="[0-9]{6}"
-                   maxlength="6" placeholder="6-digit pincode" required>
+                   maxlength="6" placeholder="6-digit pincode" autocomplete="postal-code" required>
+          </div>
+
+          <div class="form-group">
+            <label for="addressType">Address Type</label>
+            <select id="addressType" name="addressType"
+                    style="width:100%;min-height:46px;padding:11px 13px;background:#FFFEFA;border:1px solid var(--border);border-radius:8px;font:inherit;">
+              <option value="home">Home</option>
+              <option value="work">Work</option>
+              <option value="other">Other</option>
+            </select>
           </div>
         </div>
 
         <label class="checkbox-row">
-          <input type="checkbox" name="makeDefault">
+          <input type="checkbox" name="makeDefault" id="makeDefault">
           Make this my default address
         </label>
 
-        <button class="btn btn-primary" type="submit">Save Address</button>
+        <button class="btn btn-primary" type="submit" id="save-address">Save Address</button>
+        <button class="btn btn-outline" type="button" id="cancel-edit" hidden>Cancel Edit</button>
       </form>
     </section>
   </main>

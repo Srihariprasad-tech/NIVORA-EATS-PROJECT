@@ -5,7 +5,14 @@
 // POST  /cart                -> used by "Reorder"
 // =====================================================
 
-const ordersUser = requireLogin();
+const ordersUser = requireLogin(["customer", "cook"]);
+const IS_COOK = ordersUser && ordersUser.role === "cook";
+
+// What a cook can do next (backend STATUS_FLOW + ROLE_ALLOWED_STATUSES)
+const COOK_NEXT = {
+  confirmed: ["preparing", "Start Preparing"],
+  preparing: ["ready", "Mark as Ready"]
+};
 
 const ordersList = document.getElementById("orders-list");
 const ordersMessage = document.getElementById("orders-message");
@@ -39,12 +46,6 @@ const STEPS_DONE = {
   delivered: 4
 };
 
-function el(tag, className, text) {
-  const element = document.createElement(tag);
-  if (className) element.className = className;
-  if (text !== undefined) element.textContent = text;
-  return element;
-}
 
 function formatDate(value) {
   const date = new Date(value);
@@ -71,7 +72,7 @@ async function loadOrders() {
   ordersMessage.textContent = "Loading your orders...";
 
   try {
-    const data = await apiFetch("/orders");
+    const data = await apiFetch(IS_COOK ? "/orders/cook?limit=50" : "/orders");
     allOrders = data.orders || [];
     renderOrders();
   } catch (error) {
@@ -110,7 +111,7 @@ function renderOrderCard(order) {
   const heading = el("div");
   heading.append(
     el("span", "order-label", "ORDER ID"),
-    el("h3", "", order.orderNumber),
+    el("h3", "", order.orderNumber || "#" + String(order._id).slice(-8).toUpperCase()),
     el("p", "muted", "Placed on " + formatDate(order.placedAt || order.createdAt))
   );
   top.append(heading, el("span", "status " + statusClass(order.orderStatus), STATUS_LABEL[order.orderStatus] || order.orderStatus));
@@ -152,6 +153,33 @@ function renderOrderCard(order) {
   }
 
   const buttons = el("div", "button-group");
+
+  if (IS_COOK) {
+    if (order.orderStatus !== "cancelled") {
+      total.replaceChildren("Your earnings: ", el("strong", "", formatMoney(order.cookSubtotal)));
+    }
+    const address = order.deliveryAddress;
+    if (address) {
+      card.append(el("p", "muted",
+        `Deliver to: ${address.fullName}, ${address.addressLine}, ${address.city} - ${address.pincode} · ${address.phoneNo}`));
+    }
+    const next = COOK_NEXT[order.orderStatus];
+    if (next) {
+      const nextButton = el("button", "btn btn-primary", next[1]);
+      nextButton.type = "button";
+      nextButton.addEventListener("click", () => updateStatus(order, next[0], nextButton));
+      buttons.append(nextButton);
+    }
+    if (order.orderStatus === "confirmed" || order.orderStatus === "preparing") {
+      const cancelButton = el("button", "btn btn-outline", "Cancel");
+      cancelButton.type = "button";
+      cancelButton.addEventListener("click", () => cancelOrder(order, cancelButton));
+      buttons.append(cancelButton);
+    }
+    bottom.append(total, buttons);
+    card.append(bottom);
+    return card;
+  }
 
   if (order.orderStatus === "confirmed") {
     const cancelButton = el("button", "btn btn-outline", "Cancel Order");
@@ -202,7 +230,7 @@ function renderOrders() {
 
 // ---------- Actions ----------
 async function cancelOrder(order, button) {
-  if (!confirm(`Cancel order ${order.orderNumber}? Your money will be refunded.`)) return;
+  if (!confirm(IS_COOK ? "Cancel this order? The customer will be refunded." : `Cancel order ${order.orderNumber}? Your money will be refunded.`)) return;
 
   button.disabled = true;
   button.textContent = "Cancelling...";
@@ -217,6 +245,17 @@ async function cancelOrder(order, button) {
     alert(error.message);
   }
 
+  loadOrders();
+}
+
+async function updateStatus(order, status, button) {
+  button.disabled = true;
+  try {
+    const data = await apiFetch(`/orders/${order._id}/status`, { method: "PATCH", body: { status } });
+    showToast(data.message || "Order updated");
+  } catch (error) {
+    showToast(error.message, true);
+  }
   loadOrders();
 }
 
@@ -258,5 +297,9 @@ filterTabs.addEventListener("click", (event) => {
 });
 
 if (ordersUser) {
+  if (IS_COOK) {
+    document.querySelector(".page-heading h1").textContent = "Orders to Prepare";
+    document.querySelector(".page-heading p:last-child").textContent = "Orders that include your dishes. Move them to Preparing, then Ready.";
+  }
   loadOrders();
 }

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Cart | Nivora Eats</title>
+  <link rel="stylesheet" href="checkout.css">
+  <link rel="stylesheet" href="app.css">
+  <script src="api.js"></script>
+  <script src="cart.js" defer></script>
+  <style>
+    .cart-row { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .cart-row:last-child { border-bottom: none; }
+    .cart-row img { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
+    .cart-row .food-info { flex: 1; min-width: 0; }
+    .cart-row .food-info h3 { margin: 0 0 4px; font-size: 16px; }
+    .cart-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .remove-link { background: none; border: none; color: var(--cinnamon-brown); cursor: pointer; font-size: 13px; padding: 4px; }
+    .clear-link { display: block; margin: 12px auto 0; }
+    @media (max-width: 560px) {
+      .cart-row { flex-wrap: wrap; }
+      .cart-actions { width: 100%; justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <img src="img_logo.jpeg" alt="Nivora Eats Logo">
+    </a>
+    <nav></nav>
+  </header>
+
+  <main class="container">
+    <section class="page-heading">
+      <p class="eyebrow">FRESH FOOD, MADE WITH CARE</p>
+      <h1>My Cart</h1>
+      <p>Check your dishes before you place the order.</p>
+    </section>
+
+    <div id="page-message" class="message" role="status" hidden></div>
+
+    <div class="checkout-layout">
+      <div class="left-column">
+        <section class="panel">
+          <div class="section-heading">
+            <span class="step">1</span>
+            <div>
+              <h2>Your Dishes</h2>
+              <p class="muted">Change quantity or remove a dish.</p>
+            </div>
+          </div>
+          <div id="cart-list">
+            <p class="muted">Loading your cart...</p>
+          </div>
+        </section>
+      </div>
+
+      <aside class="panel bill-panel">
+        <h2>Bill Details</h2>
+
+        <div class="bill-row">
+          <span>Item Total</span>
+          <strong id="item-total">₹0</strong>
+        </div>
+
+        <div class="bill-row">
+          <span>Delivery Fee</span>
+          <strong id="delivery-fee">₹0</strong>
+        </div>
+
+        <div class="bill-row grand-total">
+          <span>Total Amount</span>
+          <strong id="grand-total">₹0</strong>
+        </div>
+
+        <a id="go-checkout" href="checkout.html" class="btn btn-primary" style="display:block;text-align:center;text-decoration:none;">
+          Proceed to Checkout
+        </a>
+
+        <button id="clear-cart" type="button" class="remove-link clear-link" hidden>Clear cart</button>
+
+        <a href="food-list-page.html" class="back-link">
+          ← Continue exploring food
+        </a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    Made with care by Nivora Eats ♥️
+  </footer>
+
+</body>
+</html>
