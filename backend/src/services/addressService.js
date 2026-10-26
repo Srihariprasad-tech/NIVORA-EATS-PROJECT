@@ -1,14 +1,38 @@
 const address = require("../models/address");
 
 // create address//
+// const createaddress = async (data, userId) => {
+//     const addressData = {
+//         ...data,
+//         user: userId
+//     };
+//     const newAddress = await address.create(addressData);
+//     return newAddress;
+// };
+
+
+
 const createaddress = async (data, userId) => {
+    const hasAddress = await address.exists({ user: userId });
+    const makeDefault = !hasAddress || data.isDefault === true;
+
+    if (makeDefault) {
+        await address.updateMany(
+            { user: userId },
+            { $set: { isDefault: false } }
+        );
+    }
+
     const addressData = {
         ...data,
-        user: userId
+        user: userId,
+        isDefault: makeDefault
     };
     const newAddress = await address.create(addressData);
     return newAddress;
 };
+
+
 
 // get all address//
 const getaddress=async(data)=>

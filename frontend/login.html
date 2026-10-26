@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIVORA EATS login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="login.css">
+    <script src="api.js"></script>
+    <script src="login.js" defer></script>
+</head>
+<body>
+    <div class="login-page">
+        <img class="login-background" src="login_background.jpeg" alt="login-background image">
+        <div class="login-card">
+            <h2 class="login-header">Login</h2>
+            <p class="login-subtext">Don't have an account? <a href="sign-up.html">Create account</a></p>
+            <form id="login-form" class="login-input" novalidate>
+                <input id="login-email" class="login-info" type="email" placeholder="Enter Email" autocomplete="email" required>
+                <input id="login-password" class="login-info" type="password" placeholder="Enter Password" autocomplete="current-password" required>
+                <button id="login-button" class="login-card-button" type="submit">Login</button>
+            </form>
+            <p id="login-message" role="status" style="margin-top:10px;font-size:14px;min-height:18px;"></p>
+            <p class="forgot-password">Forgot Password?</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const Razorpay = require("razorpay");
 const Cart = require("../models/cart");
 const Payment = require("../models/payments");
+const Food = require("../models/food");
 
 // Make sure .env is loaded before this service is imported.
 if (
@@ -41,13 +42,39 @@ const createpaymentorder = async (userid) => {
         throw new Error("Cart not found or empty");
     }
 
-    let subtotal = 0;
+   // let subtotal = 0;
 
     // Calculate the subtotal.
     // IMPORTANT: For production, retrieve prices from trusted Food
     // documents instead of trusting prices stored in the cart.
+    // for (const item of usercart.items) {
+    //     const price = Number(item.price);
+    //     const quantity = Number(item.quantity);
+
+    //     if (
+    //         !Number.isFinite(price) ||
+    //         price <= 0 ||
+    //         !Number.isInteger(quantity) ||
+    //         quantity <= 0
+    //     ) {
+    //         throw new Error("Invalid cart item price or quantity");
+    //     }
+
+    //     subtotal += price * quantity;
+    // }
+
+    let subtotal = 0;
+
     for (const item of usercart.items) {
-        const price = Number(item.price);
+        const foodData = await Food.findById(item.food);
+
+        if (!foodData || !foodData.isActive || !foodData.isAvailable) {
+            throw new Error(
+                `${foodData ? foodData.name : "An item"} is no longer available. Remove it from your cart.`
+            );
+        }
+
+        const price = Number(foodData.price);
         const quantity = Number(item.quantity);
 
         if (
@@ -61,7 +88,6 @@ const createpaymentorder = async (userid) => {
 
         subtotal += price * quantity;
     }
-
     subtotal = roundMoney(subtotal);
 
     const grandTotal = roundMoney(subtotal + DELIVERY_FEE);

@@ -37,7 +37,7 @@ router.get(
 router.patch(
     "/:id/status",
     authmidd,
-    allowRoles("cook", "admin"),
+    allowRoles("cook", "admin","delivery"),
     ordercontroller.updateOrderStatus
 );                                                              // PATCH /orders/:id/status
 

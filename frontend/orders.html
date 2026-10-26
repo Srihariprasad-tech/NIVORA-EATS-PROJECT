@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Orders | Nivora Eats</title>
+  <link rel="stylesheet" href="orders.css">
+  <script src="api.js"></script>
+  <script src="orders.js" defer></script>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <img src="img_logo.jpeg" alt="Nivora Eats">
+      
+    </a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="food-list-page.html">Explore Food</a>
+      <a href="address.html">My Addresses</a>
+      <a href="user-profile.html">Profile</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="page-heading">
+      <p class="eyebrow">YOUR FOOD JOURNEY</p>
+      <h1>My Orders</h1>
+      <p>Track your orders and enjoy homemade food.</p>
+    </section>
+
+    <div class="filter-tabs" id="filter-tabs">
+      <button type="button" class="active" data-filter="all">All Orders</button>
+      <button type="button" data-filter="active">Active</button>
+      <button type="button" data-filter="delivered">Delivered</button>
+      <button type="button" data-filter="cancelled">Cancelled</button>
+    </div>
+
+    <p id="orders-message" class="muted" role="status">Loading your orders...</p>
+
+    <section class="orders-list" id="orders-list"></section>
+
+    <div class="back-link">
+      <a href="food-list-page.html">← Continue exploring food</a>
+    </div>
+  </main>
+
+  <footer>
+    Made with care, just like homemade food. © 2026 Nivora Eats
+  </footer>
+
+</body>
+</html>

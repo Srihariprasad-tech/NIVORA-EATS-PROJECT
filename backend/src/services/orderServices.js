@@ -47,6 +47,7 @@ const STATUS_FLOW = {
 // Which statuses each role may set
 const ROLE_ALLOWED_STATUSES = {
     cook: ["preparing", "ready"],
+    delivery: ["out_for_delivery", "delivered"],
     admin: ["preparing", "ready", "out_for_delivery", "delivered"]
 };
 

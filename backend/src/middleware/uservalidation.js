@@ -21,7 +21,11 @@ phone:Joi.string()
 .trim()
 .min(10)
 .max(15)
-.required()
+.required(),
+
+role:Joi.string()
+.valid("customer","cook")
+.default("customer")
 });
 
 const validateuser=(req,res,next)=>

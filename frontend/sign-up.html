@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIVORA EATS sign-up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="sign-up.css">
+    <script src="api.js"></script>
+    <script src="sign-up.js" defer></script>
+</head>
+<body>
+    <main>
+        <div class="signup-page">
+              <div class="signup-left">
+                    
+                   <img src="img_logo.jpeg" class="brand-logo" alt="nivora-logo">
+            
+                   <h1 class="signup-left_heading">Good Food Feels Like Home.</h1>
+                   <p class="signup-left_desc">Discover delicious homemade meals prepared with care by local home cooks.</p>
+                <div class="feature-list">
+                   <div class="features-points">
+                      <div class="feature-title">
+                         <span class="icon"><i class="fa-solid fa-house"></i></span>
+                         <h4>Homemade Goodness</h4>
+                      </div>
+                      <p class="feature-desc">Meals prepared with warmth of home.</p>
+                   </div>
+                   <div class="features-points"> 
+                      <div class="feature-title">
+                         <span class="icon"><i class="fa-solid fa-leaf"></i></span>
+                         <h4>Fresh & Local</h4>
+                      </div>
+                      <p class="feature-desc">Discover food made by local home cooks.</p>
+                   </div>
+                   <div class="features-points">
+                      <div class="feature-title">
+                         <span class="icon"><i class="fa-solid fa-heart"></i></span>
+                         <h4>Made With Care</h4>
+                      </div>
+                      <p class="feature-desc">Prepared with love, tradition and care.</p>
+                   </div>
+            
+
+                 </div>
+                   
+                   <img src="dosa.png" class="south-food-img" alt="south-foood-img">
+
+                   
+              </div>
+              <div class="signup-right">
+                  <div class="signup-card">
+                    <div class="card-header">
+                     <h2>Create an Account</h2>
+                     <p>Join the Nivora Eats community to order or share fresh homemade meals!</p>
+                    </div>
+                     <form id="signup-form" novalidate style="display:contents">
+                     <input id="signup-name" class="user-info" type="text" placeholder="Enter your full name" autocomplete="name" required>
+                     <input id="signup-email" class="user-info" type="email" placeholder="Enter your email" autocomplete="email" required>
+                     <input id="signup-password" class="user-info" type="password" placeholder="Create password (min 8 characters)" autocomplete="new-password" minlength="8" required>
+                     <input id="signup-phone" class="user-info" type="tel" placeholder="Enter phone number" autocomplete="tel" required>
+                     <select id="signup-role" class="user-role" required>
+                        <option value="">Select Role</option>
+                        <option value="customer">Customer</option>
+                        <option value="cook">Cook</option>
+                     </select>
+                     <button id="signup-button" class="signup-button" type="submit">Sign Up</button>
+                     </form>
+                     <p id="signup-message" role="status" style="font-size:14px;min-height:18px;margin:4px 0;"></p>
+                     <p class="login-text">
+                        Already have an account? <a href="login.html">Login</a>
+                     </p>
+                     
+                  </div>
+                  
+        </div>
+    </main>
+</body>
+</html>

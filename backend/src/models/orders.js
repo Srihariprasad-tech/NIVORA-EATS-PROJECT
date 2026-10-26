@@ -157,7 +157,9 @@ const orderSchema = new mongoose.Schema(
         payment: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "payment",
-            required: true
+            required: true,
+            unique:true
+
         },
 paymentStatus: {
     type: String,
@@ -170,7 +172,11 @@ paymentStatus: {
     enum: ["confirmed", "preparing", "ready", "out_for_delivery", "delivered", "cancelled"],
     default: "confirmed"
 },
-
+deliveryAgent: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    default: null
+},
         notes: {
             type: String,
             trim: true,

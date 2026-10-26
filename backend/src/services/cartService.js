@@ -3,12 +3,22 @@ const food = require("../models/food");
 
 const cartfod = async (data, userId) => {
 
-    const foodData = await food.findById(data.foodId);
+    data = data || {};
+    const quantity = Number(data.quantity ?? 1);
 
-    if (!foodData) {
-        throw new Error("Food not found");
+    if (!Number.isInteger(quantity) || quantity < 1 || quantity > 20) {
+        const err = new Error("Quantity must be a whole number from 1 to 20");
+        err.statusCode = 400;
+        throw err;
     }
 
+    const foodData = await food.findById(data.foodId);
+
+    if (!foodData || !foodData.isActive || !foodData.isAvailable) {
+        const err = new Error("Food not found or not available");
+        err.statusCode = 404;
+        throw err;
+    }
     let userCart = await cart.findOne({
         user: userId
     });
@@ -20,11 +30,11 @@ const cartfod = async (data, userId) => {
             items: [
                 {
                     food: foodData._id,
-                    quantity: data.quantity,
+                    quantity: quantity,
                     price: foodData.price
                 }
             ],
-            subtotal: foodData.price * data.quantity
+            subtotal: foodData.price *quantity
         });
 
         return userCart;
@@ -38,13 +48,18 @@ const cartfod = async (data, userId) => {
  
     if (existingItem) {
 
-        existingItem.quantity += data.quantity;
+              if (existingItem.quantity + quantity > 20) {
+            const err = new Error("Maximum quantity is 20");
+            err.statusCode = 400;
+            throw err;
+        }
+        existingItem.quantity += quantity; 
 
     } else {
 
         userCart.items.push({
             food: foodData._id,
-            quantity: data.quantity,
+            quantity: quantity,
             price: foodData.price
         });
     }

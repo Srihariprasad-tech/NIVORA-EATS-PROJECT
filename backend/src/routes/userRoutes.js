@@ -4,7 +4,7 @@ const createuser=require("../controllers/usercontroller");
 const auth=require("../middleware/authmiddleware");
 const allowroles=require("../middleware/rolemiddleware");
 
-router.get("/",createuser.read);
+router.get("/",auth,allowroles("admin"),createuser.read);
 router.get("/profile",auth,createuser.profile);
 
 router.get("/admin-test",auth,allowroles("admin"),(req,res)=>
@@ -16,7 +16,7 @@ router.get("/admin-test",auth,allowroles("admin"),(req,res)=>
 });
 
 
-router.get("/:id",createuser.one);
-router.patch("/:id",createuser.update);
-router.delete("/:id",createuser.del);
+router.get("/:id",auth,allowroles("admin"),createuser.one);
+router.patch("/:id",auth,allowroles("admin"),createuser.update);
+router.delete("/:id",auth,allowroles("admin"),createuser.del);
 module.exports=router;

@@ -128,14 +128,25 @@ return done;
 }
 
 //deletethefood//
+// const deletefood=async(id,userId)=>
+// {
+//     const del=await food.findByIdAndDelete(
+//         {
+//             _id:id,
+//             cook:userId
+//         }
+//     );
+//     return del;
+// }
 const deletefood=async(id,userId)=>
 {
-    const del=await food.findByIdAndDelete(
-        {
-            _id:id,
-            cook:userId
-        }
-    );
+    const del=await food.findOneAndDelete({ _id:id, cook:userId });
+    if(!del)
+    {
+        const err=new Error("Food not found or you are not the owner");
+        err.statusCode=404;
+        throw err;
+    }
     return del;
 }
 
@@ -149,21 +160,41 @@ return fdd;
 }
 // update ava//
 
+// const upda=async(id,foodid,data)=>
+// {
+//     const mod=await food.findByIdAndUpdate(
+//         {
+//          _id:id,
+//          cook:foodid
+//         },data,
+
+//         {
+//  new:true,
+//     }
+// );
+// return mod;
+// }
 const upda=async(id,foodid,data)=>
 {
-    const mod=await food.findByIdAndUpdate(
-        {
-         _id:id,
-         cook:foodid
-        },data,
-
-        {
- new:true,
+    if(typeof data.isAvailable!=="boolean")
+    {
+        const err=new Error("isAvailable must be true or false");
+        err.statusCode=400;
+        throw err;
     }
-);
-return mod;
+    const mod=await food.findOneAndUpdate(
+        { _id:id, cook:foodid },
+        { isAvailable:data.isAvailable },
+        { new:true, runValidators:true }
+    );
+    if(!mod)
+    {
+        const err=new Error("Food not found or you are not the owner");
+        err.statusCode=404;
+        throw err;
+    }
+    return mod;
 }
-
 // all data of the cook//
  
 const ckk=async(data)=>
