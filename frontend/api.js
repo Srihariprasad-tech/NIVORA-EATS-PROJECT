@@ -18,8 +18,8 @@ const API_BASE = IS_LOCAL ? "http://localhost:3000" : BACKEND_URL.replace(/\/$/,
 // 2) Cloudinary (food photo uploads from the cook dashboard)
 //    Cloudinary -> Settings -> Upload -> Upload presets -> Add preset -> Signing mode: Unsigned
 //    Put your cloud name and the preset name here.
-const CLOUDINARY_CLOUD_NAME = "YOUR_CLOUD_NAME";
-const CLOUDINARY_UPLOAD_PRESET = "YOUR_UNSIGNED_PRESET";
+const CLOUDINARY_CLOUD_NAME = "fyqrskrw";              // your Cloud name
+const CLOUDINARY_UPLOAD_PRESET = "nivora_eats_unsigned"; // your preset name
 
 // 3) Login session (token + user) saved in the browser
 function getToken() {
