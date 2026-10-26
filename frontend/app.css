@@ -2,6 +2,7 @@
    Nivora Eats - shared styles for pop-ups and messages
    (uses the same colours as the rest of the site)
    ===================================================== */
+   [hidden] { display: none !important; }
 :root {
   --nv-cream: #FDF7E9;
   --nv-green: #2F3E2E;
